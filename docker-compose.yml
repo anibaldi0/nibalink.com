@@ -1,4 +1,3 @@
-
 # nibalink.com-project
 
 services:
@@ -6,10 +5,11 @@ services:
     image: postgres:15-alpine
     container_name: nibalink_db
     restart: always
+    # Docker Compose lee el archivo .env de la raiz automaticamente
     environment:
-      POSTGRES_USER: ${DB_USER:-nibal_admin}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-nibal_pass}
-      POSTGRES_DB: ${DB_NAME:-nibalink_db}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
@@ -24,7 +24,12 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://${DB_USER:-nibal_admin}:${DB_PASSWORD:-nibal_pass}@db:5432/${DB_NAME:-nibalink_db}
+      # Construccion dinamica de la URL de conexion
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      # Inyectamos tambien las claves del admin para que el seed las vea desde el env del contenedor
+      ADMIN_NICK: ${ADMIN_NICK}
+      ADMIN_PASS: ${ADMIN_PASS}
+      SECRET_KEY: ${SECRET_KEY}
     depends_on:
       - db
 
@@ -38,7 +43,8 @@ services:
     ports:
       - "5173:5173"
     environment:
-      - VITE_API_URL=http://localhost:8000
+      # Usamos la variable del .env para que en Oracle Cloud no apunte a localhost
+      - VITE_API_URL=${VITE_API_URL}
     depends_on:
       - backend
 

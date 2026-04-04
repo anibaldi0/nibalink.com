@@ -1,11 +1,5 @@
 # backend/app/scripts/seed_script.py
 
-"""
-FILE: backend/app/scripts/seed_script.py
-DESCRIPTION: Script de recuperacion de desastres y inicializacion.
-             Resetea la cuenta de administrador a valores por defecto.
-"""
-
 import sys
 import os
 from dotenv import load_dotenv
@@ -25,11 +19,10 @@ def reset_admin():
     try:
         print("Iniciando reseteo de administrador...")
         
-        # 1. Limpiamos usuarios existentes (o solo el admin)
+        # 1. Limpiamos usuarios existentes
         db.query(User).delete()
         
-        # 2. Creamos el usuario semilla
-        # IMPORTANTE: Cambia esto apenas loguees
+        # 2. Obtenemos credenciales del entorno
         admin_nick = os.getenv("ADMIN_NICK", "admin")
         admin_pass = os.getenv("ADMIN_PASS", "admin")
         
@@ -41,10 +34,18 @@ def reset_admin():
         
         db.add(new_admin)
         db.commit()
-        print(f"EXITO: Usuario resetado.")
-        print(f"Email: {admin_nick}")
-        print(f"Pass: {admin_pass}")
-        print(f"RECORDATORIO: Cambia la pass desde el Dashboard inmediatamente.")
+        
+        # --- SALIDA SEGURA EN TERMINAL ---
+        print("-" * 30)
+        print("EXITO: Base de datos sincronizada.")
+        print(f"Admin User: {admin_nick}")
+        # Ocultamos la pass. Si es 'admin', mostramos aviso de peligro.
+        if admin_pass == "admin":
+            print("Password: [ DEFAULT / PELIGRO ]")
+        else:
+            print("Password: [ CONFIGURADA EN .ENV ]")
+        print("-" * 30)
+        print("RECORDATORIO: Verifica el acceso en nibalink.com/login")
         
     except Exception as e:
         print(f"ERROR: {e}")
