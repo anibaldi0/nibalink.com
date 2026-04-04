@@ -1,0 +1,46 @@
+
+# nibalink.com-project
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: nibalink_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-nibal_admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-nibal_pass}
+      POSTGRES_DB: ${DB_NAME:-nibalink_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: nibalink_backend
+    restart: always
+    volumes:
+      - ./backend:/code
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-nibal_admin}:${DB_PASSWORD:-nibal_pass}@db:5432/${DB_NAME:-nibalink_db}
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: nibalink_frontend
+    restart: always
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
