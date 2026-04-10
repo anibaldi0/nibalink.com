@@ -15,8 +15,12 @@ const BitacoraPage: React.FC = () => {
   const [errors, setErrors] = useState<ErrorPost[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // CORRECCION NINJA: Definimos la URL base desde el entorno
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
   useEffect(() => {
-    axios.get<ErrorPost[]>('http://localhost:8000/blog/')
+    // Reemplazamos localhost por la variable dinamica
+    axios.get<ErrorPost[]>(`${apiUrl}/blog/`)
       .then(res => {
         setErrors(res.data);
         setLoading(false);
@@ -25,7 +29,7 @@ const BitacoraPage: React.FC = () => {
         console.error("API Error:", err);
         setLoading(false);
       });
-  }, []);
+  }, [apiUrl]);
 
   if (loading) {
     return <div className="py-20 text-center text-slate-500 animate-pulse">Sincronizando registros del servidor...</div>;
@@ -35,7 +39,7 @@ const BitacoraPage: React.FC = () => {
     <section className="py-10">
       <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-slate-800 dark:text-white">
         <AlertCircle className="text-blue-600 dark:text-blue-400" size={28} />
-        Bitácora de Desafíos Resueltos
+        Bitacora de Desafios Resueltos
       </h2>
 
       <div className="grid gap-8">
@@ -62,7 +66,7 @@ const BitacoraPage: React.FC = () => {
             <div className="flex gap-3 items-start bg-green-500/5 p-4 rounded-xl border border-green-500/10">
               <CheckCircle2 className="text-green-600 dark:text-green-500 shrink-0 mt-0.5" size={18} />
               <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                <span className="text-green-600 dark:text-green-400 font-bold mr-1 italic underline">Resolución:</span> {err.solution}
+                <span className="text-green-600 dark:text-green-400 font-bold mr-1 italic underline">Resolucion:</span> {err.solution}
               </p>
             </div>
 

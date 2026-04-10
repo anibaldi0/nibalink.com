@@ -69,8 +69,9 @@ app = FastAPI(title="nibalink API", lifespan=lifespan)
 
 # --- CONFIGURACION DE CORS ---
 origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
+    "https://nibalink.com",
+    "https://www.nibalink.com",
+    "http://localhost:5173", # Mantenemos este para tus pruebas locales en la Dell
 ]
 
 app.add_middleware(

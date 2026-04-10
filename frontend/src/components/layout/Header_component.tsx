@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Menu, X, Sun, Moon, LogIn, LogOut, User, LayoutDashboard } from 'lucide-react'; 
 import { useDarkMode } from '../../hooks/useDarkMode_hook';
 import { Link, useNavigate } from 'react-router-dom';
+// @ts-ignore
 import nibalinkLogo from '../../assets/img/nibalink_dark.png';
 
 interface HeaderProps {

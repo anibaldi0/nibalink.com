@@ -23,9 +23,12 @@ const DashboardPage: React.FC = () => {
   const isAdmin = !!localStorage.getItem('nibalink_token');
   const token = localStorage.getItem('nibalink_token');
 
+  // CORRECCION NINJA: Centralizamos la URL de la API
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
   const fetchSites = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/services/status');
+      const res = await axios.get(`${apiUrl}/services/status`);
       setSites(res.data);
     } catch (err) { 
       console.error("Error sync status:", err); 
@@ -42,7 +45,7 @@ const DashboardPage: React.FC = () => {
 
   const handleCreate = async (data: any) => {
     try {
-      await axios.post('http://localhost:8000/services/', data, {
+      await axios.post(`${apiUrl}/services/`, data, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setShowCreate(false);
@@ -52,7 +55,7 @@ const DashboardPage: React.FC = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8000/services/${siteToManage?.id_site}`, {
+      await axios.delete(`${apiUrl}/services/${siteToManage?.id_site}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setShowDelete(false);

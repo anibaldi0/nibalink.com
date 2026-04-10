@@ -29,12 +29,15 @@ const MetricsPage: React.FC = () => {
   const [sites, setSites] = useState<WebSiteStatus[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // CORRECCION NINJA: Definimos la URL base desde el entorno
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
   const fetchData = async () => {
     try {
       const [resHistory, resCurrent, resSites] = await Promise.all([
-        axios.get('http://localhost:8000/metrics/history'),
-        axios.get('http://localhost:8000/metrics/current'),
-        axios.get('http://localhost:8000/services/status') // Endpoint dinamico
+        axios.get(`${apiUrl}/metrics/history`),
+        axios.get(`${apiUrl}/metrics/current`),
+        axios.get(`${apiUrl}/services/status`) 
       ]);
       setHistory(resHistory.data.reverse());
       setCurrent(resCurrent.data);
@@ -81,21 +84,19 @@ const MetricsPage: React.FC = () => {
             const isOnline = site.status === 'online';
             const ms = site.response_time * 1000;
             
-            // 1. Logica de colores de texto para latencia
             let latencyTextColor = "text-slate-400";
             if (!isOnline) latencyTextColor = "text-red-600 font-bold";
             else if (site.response_time < 0.3) latencyTextColor = "text-green-500";
             else if (site.response_time < 0.8) latencyTextColor = "text-yellow-500 font-medium";
             else latencyTextColor = "text-red-500 font-bold";
 
-            // 2. Logica de colores de BORDE (Para que la card online resalte como la offline)
-            let borderColor = "border-slate-200 dark:border-slate-700"; // Default
+            let borderColor = "border-slate-200 dark:border-slate-700"; 
             if (!isOnline) {
               borderColor = "border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.1)]";
             } else if (site.response_time < 0.3) {
-              borderColor = "border-green-500/30 dark:border-green-500/20"; // Borde sutil verde si es veloz
+              borderColor = "border-green-500/30 dark:border-green-500/20"; 
             } else if (site.response_time > 0.8) {
-              borderColor = "border-red-400/40 animate-pulse"; // Pulsa en rojo si está muy lento aunque esté online
+              borderColor = "border-red-400/40 animate-pulse"; 
             }
 
             return (
@@ -104,7 +105,6 @@ const MetricsPage: React.FC = () => {
                 className={`group p-6 bg-white dark:bg-slate-800/40 border rounded-[2rem] transition-all duration-500 hover:shadow-xl hover:scale-[1.02] shadow-sm ${borderColor}`}
               >
                 <div className="flex justify-between items-start mb-4">
-                  {/* Badge de Estado con Glow */}
                   <div className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter flex items-center gap-1.5 ${
                     isOnline 
                       ? 'bg-green-500/10 text-green-500 border border-green-500/20' 
@@ -113,7 +113,6 @@ const MetricsPage: React.FC = () => {
                     <span className={`h-1.5 w-1.5 rounded-full ${isOnline ? 'bg-green-500 shadow-[0_0_5px_#22c55e]' : 'bg-red-500 shadow-[0_0_5px_#ef4444]'}`} />
                     {isOnline ? 'system_online' : 'system_offline'}
                   </div>
-                  {/* <div className="text-[10px] font-mono text-slate-500 opacity-50">ID_{site.id_site}</div> */}
                 </div>
                 
                 <h3 className="font-black text-slate-900 dark:text-white truncate uppercase tracking-tight text-lg">
@@ -148,7 +147,6 @@ const MetricsPage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Card CPU */}
           <div className="p-8 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-[2rem] shadow-xl hover:border-blue-500/30 transition-colors">
             <div className="flex items-center justify-between mb-6">
               <div className="p-3 bg-blue-500/10 rounded-2xl">
@@ -162,7 +160,6 @@ const MetricsPage: React.FC = () => {
             </h3>
           </div>
 
-          {/* Card RAM */}
           <div className="p-8 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-[2rem] shadow-xl hover:border-purple-500/30 transition-colors">
             <div className="flex items-center justify-between mb-6">
               <div className="p-3 bg-purple-500/10 rounded-2xl">
