@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/* Si quieres forzar el estilo dark de fondo en el body como un ninja */
+@layer base {
+  body {
+    background-color: theme('colors.slate.950');
+    color: theme('colors.slate.200');
+  }
+}

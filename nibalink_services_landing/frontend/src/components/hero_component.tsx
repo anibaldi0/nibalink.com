@@ -1,25 +1,33 @@
-import React from 'react';
 
-const HeroComponent = () => {
+// nibalink_services_landing/frontend/src/components/hero_component.tsx
+
+import { Cpu } from 'lucide-react';
+
+export default function HeroComponent() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-slate-50 px-4">
-      <div className="relative mb-8">
-        {/* Logo de candado circular con estetica cyberpunk */}
-        <div className="w-32 h-32 border-2 border-cyan-500 rounded-full flex items-center justify-center animate-pulse shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-          <svg className="w-16 h-16 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
+    <section className="relative min-h-[70vh] flex flex-col items-center justify-center bg-slate-950 overflow-hidden">
+      {/* Efecto de resplandor de fondo (Glow) */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,#1e3a8a,transparent_50%)] opacity-50" />
+      
+      {/* Grilla tecnica */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]" />
+
+      <div className="relative z-10 flex flex-col items-center">
+        <div className="mb-6 p-4 bg-slate-900/50 border border-blue-500/30 rounded-2xl backdrop-blur-sm shadow-[0_0_20px_rgba(37,99,235,0.2)]">
+          <Cpu className="w-12 h-12 text-blue-500 animate-pulse" />
         </div>
+        
+        <h1 className="text-6xl font-bold tracking-tighter text-white mb-2">
+          NIBALINK<span className="text-blue-600">.COM</span>
+        </h1>
+        <p className="text-sm font-mono tracking-[0.3em] text-blue-400 uppercase mb-8">
+          Enlace Digital
+        </p>
+        
+        <p className="text-slate-400 text-center max-w-lg px-4 leading-relaxed">
+          Infraestructura de backend robusta y gestion de datos optimizada para el proximo nivel de escalabilidad.
+        </p>
       </div>
-      <h1 className="text-5xl font-bold tracking-tighter bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent mb-4">
-        NIBALINK.COM
-      </h1>
-      <p className="text-xl font-mono text-slate-400 text-center max-w-2xl">
-        Enlace digital: El motor tecnico detras de silca-digital.com. 
-        Infraestructura robusta desde Avellaneda para el mundo.
-      </p>
     </section>
   );
-};
-
-export default HeroComponent;
+}

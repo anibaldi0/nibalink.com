@@ -1,20 +1,11 @@
+# nibalink_services_landing/docker-compose.yml
+
 services:
-  nibalink-services-landing:
-    build:
+  nibalink_landing:
+    build: 
       context: ./frontend
-    # El nombre del contenedor tambien debe ser consistente con su funcion
-    container_name: nibalink_services_container
-    platform: linux/arm64/v8 # Especifico para las instancias Ampere de Oracle Cloud
-    restart: always
+      dockerfile: Dockerfile
+    container_name: nibalink_services_landing
     ports:
       - "8080:80"
-    deploy:
-      resources:
-        limits:
-          memory: 512M # Proteccion de recursos para el Free Tier
-    networks:
-      - nibalink_network
-
-networks:
-  nibalink_network:
-    driver: bridge
+    restart: always

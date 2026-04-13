@@ -1,35 +1,47 @@
 
-# frontend/src/components/service_component.tsx
+// nibalink_services_landing/frontend/src/components/service_component.tsx
 
-import React from 'react';
+import { ShieldCheck, Terminal, Database, Cloud } from 'lucide-react';
 
-const ServiceComponent = () => {
-  const services = [
-    { title: "Sistemas de Turnos", desc: "Arquitectura escalable para profesionales." },
-    { title: "APIs de Catalogos", desc: "Gestion de datos pura, sin la sobrecarga de plugins." },
-    { title: "Seguridad & Sysadmin", desc: "Hardening de servidores y despliegue Dockerizado." }
-  ];
+const services = [
+  {
+    title: "Backend Nativo",
+    desc: "Sistemas robustos en Laravel/MySQL. Rendimiento superior sin la sobrecarga de plugins.",
+    icon: <Database className="w-6 h-6 text-blue-500" />
+  },
+  {
+    title: "Sysadmin Ninja",
+    desc: "Gestion de instancias en Oracle Cloud y despliegues optimizados con Docker.",
+    icon: <Terminal className="w-6 h-6 text-blue-500" />
+  },
+  {
+    title: "Seguridad Integral",
+    desc: "Implementacion de protocolos de seguridad y hardening de servidores.",
+    icon: <ShieldCheck className="w-6 h-6 text-blue-500" />
+  },
+  {
+    title: "Escalabilidad ARM",
+    desc: "Arquitecturas diseñadas para aprovechar la eficiencia de Ampere Computing.",
+    icon: <Cloud className="w-6 h-6 text-blue-500" />
+  }
+];
 
+export default function ServiceComponent() {
   return (
-    <section className="py-20 bg-slate-900">
-      <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-cyan-500 mb-12 text-center">Por que Backend Nativo?</h2>
-        <div className="grid md:grid-cols-3 gap-8">
+    <section className="py-24 bg-slate-950 relative">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((s, i) => (
-            <div key={i} className="p-6 border border-slate-800 rounded-lg bg-slate-950 hover:border-cyan-500 transition-colors">
-              <h3 className="text-xl font-semibold mb-3">{s.title}</h3>
-              <p className="text-slate-400">{s.desc}</p>
+            <div key={i} className="group p-8 bg-slate-900/40 border border-slate-800 rounded-2xl hover:border-blue-500/50 transition-all duration-300 backdrop-blur-md">
+              <div className="mb-4 group-hover:scale-110 transition-transform duration-300">
+                {s.icon}
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">{s.title}</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">{s.desc}</p>
             </div>
           ))}
-        </div>
-        <div className="mt-12 p-6 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-          <p className="text-sm font-mono text-blue-300">
-            [SYSADMIN_NOTE]: Laravel/MySQL ofrece una integridad de datos y control de concurrencia que los plugins de CMS jamas podran igualar. Menos overhead, mas seguridad.
-          </p>
         </div>
       </div>
     </section>
   );
-};
-
-export default ServiceComponent;
+}
