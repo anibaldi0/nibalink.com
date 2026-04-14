@@ -7,7 +7,7 @@ export default function ContactComponent() {
   return (
     <section className="py-24 bg-slate-950 border-t border-slate-900">
       <div className="container mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold text-white mb-8">¿Listo para asegurar tu motor tecnico?</h2>
+        <h2 className="text-3xl font-bold text-white mb-8">¿Estas listo para asegurar tu sistema?</h2>
         <a 
           href={`https://wa.me/5491127900298?text=${message}`}
           target="_blank"
@@ -17,7 +17,7 @@ export default function ContactComponent() {
           SOLICITAR ENLACE DIGITAL
         </a>
         <p className="mt-8 text-slate-500 font-mono text-xs uppercase tracking-widest">
-          Avellaneda • Buenos Aires • Argentina
+          Buenos Aires • Argentina
         </p>
       </div>
     </section>
