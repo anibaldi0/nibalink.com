@@ -5,9 +5,8 @@ import axios from 'axios';
 import { 
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area 
 } from 'recharts';
-import { Cpu, Database, Activity, Clock, RefreshCw, Globe, AlertTriangle } from 'lucide-react';
+import { Cpu, Database, Activity, Globe, Link2, ExternalLink } from 'lucide-react';
 
-// Interfaces actualizadas para coincidir con tu nuevo Backend Dinamico
 interface WebSiteStatus {
   id_site: number;
   site_name: string;
@@ -29,7 +28,6 @@ const MetricsPage: React.FC = () => {
   const [sites, setSites] = useState<WebSiteStatus[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // CORRECCION NINJA: Definimos la URL base desde el entorno
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
   const fetchData = async () => {
@@ -59,136 +57,134 @@ const MetricsPage: React.FC = () => {
   return (
     <div className="space-y-10 animate-in fade-in duration-500 pb-20">
       
-      {/* SECCION 1: WEB MONITOR (DINAMICO) */}
+      {/* SECCION 1: WEB MONITOR - SEMAFORO DE LATENCIA */}
       <section>
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-black flex items-center gap-2">
-            <Globe className="text-blue-500" size={24} />
-            Web Assets & Uptime
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-3xl font-black flex items-center gap-3">
+            <Globe className="text-blue-500" size={32} />
+            Ecosistema Digital
           </h2>
-          <span className="text-[10px] font-mono text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
-            DB_SOURCE: monitored_sites
-          </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {sites.length === 0 && (
-            <div className="col-span-full p-10 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl text-center">
-              <AlertTriangle className="mx-auto mb-2 text-yellow-500" />
-              <p className="text-slate-500 text-sm">No hay sitios registrados en la base de datos.</p>
-            </div>
-          )}
-          
-
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {sites.map((site) => {
             const isOnline = site.status === 'online';
             const ms = site.response_time * 1000;
-            
-            let latencyTextColor = "text-slate-400";
-            if (!isOnline) latencyTextColor = "text-red-600 font-bold";
-            else if (site.response_time < 0.3) latencyTextColor = "text-green-500";
-            else if (site.response_time < 0.8) latencyTextColor = "text-yellow-500 font-medium";
-            else latencyTextColor = "text-red-500 font-bold";
+            const fullUrl = site.url.startsWith('http') ? site.url : `https://${site.url}`;
 
-            let borderColor = "border-slate-200 dark:border-slate-700"; 
-            if (!isOnline) {
-              borderColor = "border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.1)]";
-            } else if (site.response_time < 0.3) {
-              borderColor = "border-green-500/30 dark:border-green-500/20"; 
-            } else if (site.response_time > 0.8) {
-              borderColor = "border-red-400/40 animate-pulse"; 
+            // LOGICA NINJA DE COLORES POR LATENCIA
+            let statusColor = "text-red-500";
+            let statusBg = "bg-red-500/10";
+            let borderColor = "border-red-500/30";
+
+            if (isOnline) {
+              if (site.response_time < 0.3) {
+                statusColor = "text-green-500";
+                statusBg = "bg-green-500/10";
+                borderColor = "border-slate-100 dark:border-slate-800 hover:border-green-500";
+              } else if (site.response_time < 0.8) {
+                statusColor = "text-yellow-500";
+                statusBg = "bg-yellow-500/10";
+                borderColor = "border-slate-100 dark:border-slate-800 hover:border-yellow-500";
+              } else {
+                statusColor = "text-red-500";
+                statusBg = "bg-red-500/10";
+                borderColor = "border-slate-100 dark:border-slate-800 hover:border-red-500";
+              }
+            } else {
+              borderColor = "border-red-500/50 animate-pulse bg-red-500/5";
             }
 
             return (
-              <div 
+              <a 
                 key={site.id_site} 
-                className={`group p-6 bg-white dark:bg-slate-800/40 border rounded-[2rem] transition-all duration-500 hover:shadow-xl hover:scale-[1.02] shadow-sm ${borderColor}`}
+                href={fullUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`group relative p-8 bg-white dark:bg-slate-800/40 border-2 rounded-[2rem] transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex flex-col justify-between ${borderColor}`}
               >
-                <div className="flex justify-between items-start mb-4">
-                  <div className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter flex items-center gap-1.5 ${
-                    isOnline 
-                      ? 'bg-green-500/10 text-green-500 border border-green-500/20' 
-                      : 'bg-red-500/20 text-red-500 border border-red-500/30 animate-pulse'
+                <div className="absolute top-6 right-8 text-slate-300 group-hover:text-blue-500 transition-colors">
+                  <ExternalLink size={20} />
+                </div>
+
+                <div>
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:rotate-12 ${
+                    isOnline ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-red-600 text-white'
                   }`}>
-                    <span className={`h-1.5 w-1.5 rounded-full ${isOnline ? 'bg-green-500 shadow-[0_0_5px_#22c55e]' : 'bg-red-500 shadow-[0_0_5px_#ef4444]'}`} />
-                    {isOnline ? 'system_online' : 'system_offline'}
+                    <Link2 size={24} />
+                  </div>
+
+                  <h3 className="font-black text-slate-900 dark:text-white truncate uppercase tracking-tight text-xl mb-1">
+                    {site.site_name}
+                  </h3>
+                  <p className="text-[10px] text-slate-500 font-mono truncate mb-8 opacity-60">
+                    {site.url}
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-700/50">
+                  <div className="flex items-center gap-2">
+                    <span className={`h-2.5 w-2.5 rounded-full ${isOnline ? (site.response_time < 0.3 ? 'bg-green-500 shadow-[0_0_8px_#22c55e]' : site.response_time < 0.8 ? 'bg-yellow-500 shadow-[0_0_8px_#eab308]' : 'bg-red-500') : 'bg-red-500 animate-ping'}`} />
+                    <span className={`text-[10px] font-black uppercase tracking-widest ${statusColor}`}>
+                      {isOnline ? (site.response_time < 0.3 ? 'Fast' : site.response_time < 0.8 ? 'Average' : 'Slow') : 'Offline'}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[9px] text-slate-400 font-bold uppercase">Latencia</p>
+                    <p className={`font-mono text-sm font-bold ${statusColor}`}>
+                      {isOnline ? `${ms.toFixed(0)}ms` : 'TIMEOUT'}
+                    </p>
                   </div>
                 </div>
-                
-                <h3 className="font-black text-slate-900 dark:text-white truncate uppercase tracking-tight text-lg">
-                  {site.site_name}
-                </h3>
-                <p className="text-[11px] text-slate-500 font-mono truncate mb-6 opacity-70 group-hover:opacity-100 transition-opacity">
-                  {site.url}
-                </p>
-                
-                <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700/50">
-                  <div className="flex flex-col">
-                    <span className="text-[9px] text-slate-400 uppercase font-black tracking-widest">Telemetry</span>
-                    <span className="text-[10px] text-slate-500 font-bold">Latency_ms</span>
-                  </div>
-                  <span className={`font-mono text-sm ${latencyTextColor}`}>
-                    {isOnline ? `${ms.toFixed(0)}ms` : 'CRITICAL_TIMEOUT'}
-                  </span>
-                </div>
-              </div>
+              </a>
             );
           })}
         </div>
       </section>
 
-      {/* SECCION 2: HARDWARE (CPU/RAM) */}
-      <section className="mb-16">
-        <div className="mb-8">
-          <h2 className="text-2xl font-black flex items-center gap-2 text-slate-900 dark:text-white">
-            <Cpu className="text-purple-500" size={24} />
-            Host Node Telemetry
-          </h2>
+      {/* SECCION 2: HARDWARE */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="p-8 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-[2.5rem]">
+          <div className="flex items-center gap-3 mb-4">
+            <Cpu className="text-blue-500" size={24} />
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">CPU Usage</span>
+          </div>
+          <h3 className="text-5xl font-black italic tracking-tighter text-slate-900 dark:text-white">
+            {current?.cpu_usage_metrics.toFixed(1)}%
+          </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-8 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-[2rem] shadow-xl hover:border-blue-500/30 transition-colors">
-            <div className="flex items-center justify-between mb-6">
-              <div className="p-3 bg-blue-500/10 rounded-2xl">
-                <Cpu className="text-blue-500" size={28} />
-              </div>
-              <RefreshCw className="text-slate-400 animate-spin-slow" size={16} />
-            </div>
-            <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-1">CPU Load</p>
-            <h3 className="text-5xl font-black tracking-tighter italic">
-              {current?.cpu_usage_metrics.toFixed(1)}%
-            </h3>
+        <div className="p-8 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-[2.5rem]">
+          <div className="flex items-center gap-3 mb-4">
+            <Database className="text-purple-500" size={24} />
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">RAM Usage</span>
           </div>
-
-          <div className="p-8 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-[2rem] shadow-xl hover:border-purple-500/30 transition-colors">
-            <div className="flex items-center justify-between mb-6">
-              <div className="p-3 bg-purple-500/10 rounded-2xl">
-                <Database className="text-purple-500" size={28} />
-              </div>
-            </div>
-            <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-1">RAM Usage</p>
-            <h3 className="text-5xl font-black tracking-tighter italic">
-              {current?.ram_usage_metrics.toFixed(1)}%
-            </h3>
-          </div>
+          <h3 className="text-5xl font-black italic tracking-tighter text-slate-900 dark:text-white">
+            {current?.ram_usage_metrics.toFixed(1)}%
+          </h3>
         </div>
       </section>
 
-      {/* SECCION 3: HISTORIAL (AREA CHART) */}
-      <section className="p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-        <div className="flex items-center gap-2 mb-6">
+      {/* SECCION 3: HISTORIAL */}
+      <section className="p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem]">
+        <div className="flex items-center gap-2 mb-8">
           <Activity className="text-green-500" size={20} />
-          <h3 className="text-lg font-bold">Telemetry History</h3>
+          <h3 className="text-lg font-black uppercase tracking-tight">Telemetría de Red</h3>
         </div>
         <div className="h-[250px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={history}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+              <defs>
+                <linearGradient id="colorCpu" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} opacity={0.1} />
               <XAxis dataKey="timestamp_metrics" hide />
-              <YAxis tick={{fontSize: 10}} unit="%" />
-              <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px' }} />
-              <Area type="monotone" dataKey="cpu_usage_metrics" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.1} />
-              <Area type="monotone" dataKey="ram_usage_metrics" stroke="#a855f7" fill="#a855f7" fillOpacity={0.1} />
+              <YAxis tick={{fontSize: 10}} unit="%" stroke="#64748b" />
+              <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '12px', color: '#fff' }} />
+              <Area type="monotone" dataKey="cpu_usage_metrics" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorCpu)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>

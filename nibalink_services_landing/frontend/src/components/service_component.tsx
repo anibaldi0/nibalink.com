@@ -29,8 +29,8 @@ const services = [
   },
   {
     id: 'database',
-    title: "Base de Datos Pro",
-    desc: "Tu informacion guardada de forma profesional y siempre disponible.",
+    title: "Base de Datos Protegida",
+    desc: "Tu informacion guardada de forma segura y siempre disponible.",
     icon: <ShieldCheck className="w-6 h-6 text-blue-500" />,
     image: databaseImgDark,
     gallery: [databaseImgDark, databaseImgLight]

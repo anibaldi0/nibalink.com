@@ -1,7 +1,7 @@
-// frontend/src/components/layout/Header_component.tsx
+// frontend/src/components/layout/header_component.tsx
 
 import React, { useState } from 'react';
-import { Menu, X, Sun, Moon, LogIn, LogOut, User, LayoutDashboard } from 'lucide-react'; 
+import { Menu, X, Sun, Moon, LogIn, LogOut, User, LayoutDashboard, ExternalLink } from 'lucide-react'; 
 import { useDarkMode } from '../../hooks/useDarkMode_hook';
 import { Link, useNavigate } from 'react-router-dom';
 // @ts-ignore
@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ loading }) => {
   };
 
   return (
-    <header className="max-w-4xl mx-auto mb-10 py-6 relative">
+    <header className="max-w-4xl mx-auto mb-10 py-6 relative px-4 md:px-0">
       <div className="flex justify-between items-center">
         {/* Logo e Identidad */}
         <Link to="/" className="flex items-center gap-3 group">
@@ -47,7 +47,14 @@ const Header: React.FC<HeaderProps> = ({ loading }) => {
         <div className="hidden md:flex items-center gap-6">
           <nav className="flex gap-4 text-sm font-medium text-slate-500 dark:text-slate-400">
             <Link to="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Inicio</Link>
-            <Link to="/servicios" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Servicios</Link>
+            
+            <a 
+              href="https://servicios.nibalink.com" 
+              className="flex items-center gap-1 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-bold text-blue-500"
+            >
+              Servicios <ExternalLink size={12} />
+            </a>
+
             <Link to="/bitacora" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Bitacora</Link>
             <Link to="/metrics" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Metricas</Link>
             {isAdmin && (
@@ -79,7 +86,7 @@ const Header: React.FC<HeaderProps> = ({ loading }) => {
           </div>
         </div>
 
-        {/* Mobile Controls */}
+        {/* Mobile Controls - RESTAURADO */}
         <div className="flex md:hidden items-center gap-2">
           <button onClick={() => setIsDark(!isDark)} className="p-2 text-slate-600 dark:text-yellow-400">
             {isDark ? <Sun size={20} /> : <Moon size={20} />}
@@ -90,16 +97,23 @@ const Header: React.FC<HeaderProps> = ({ loading }) => {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay - CORREGIDO */}
+      {/* Mobile Menu Overlay */}
       {isMenuOpen && (
         <div className="absolute top-full left-0 right-0 z-50 mt-2 p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl md:hidden animate-in fade-in slide-in-from-top-4 duration-200">
           <nav className="flex flex-col gap-2 text-sm font-medium">
             <Link to="/" onClick={() => setIsMenuOpen(false)} className="p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">Inicio</Link>
-            <Link to="/servicios" onClick={() => setIsMenuOpen(false)} className="p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">Servicios</Link>
+            
+            <a 
+              href="https://servicios.nibalink.com" 
+              onClick={() => setIsMenuOpen(false)}
+              className="p-3 text-blue-600 dark:text-blue-400 font-bold hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg flex justify-between items-center"
+            >
+              Servicios <ExternalLink size={16} />
+            </a>
+
             <Link to="/bitacora" onClick={() => setIsMenuOpen(false)} className="p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">Bitácora</Link>
             <Link to="/metrics" onClick={() => setIsMenuOpen(false)} className="p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">Métricas</Link>
             
-            {/* LINK DASHBOARD MOBILE - AÑADIDO */}
             {isAdmin && (
               <Link 
                 to="/dashboard" 

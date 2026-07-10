@@ -1,4 +1,4 @@
-# backend/app/docker_compose.yml
+# ~/dockerized_websites/nibalink.com/docker-compose.yml
 
 services:
   db:
@@ -11,7 +11,8 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      # MAPEANDO CARPETA LOCAL PARA PERSISTENCIA TOTAL
+      - ./postgres_data:/var/lib/postgresql/data
     networks:
       - nibalink_net
 
@@ -37,9 +38,7 @@ services:
     networks:
       - nibalink_net
 
-volumes:
-  postgres_data:
-
 networks:
   nibalink_net:
+    name: nibalink_net
     driver: bridge

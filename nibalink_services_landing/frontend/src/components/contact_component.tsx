@@ -16,9 +16,17 @@ export default function ContactComponent() {
         >
           SOLICITAR ENLACE DIGITAL
         </a>
-        <p className="mt-8 text-slate-500 font-mono text-xs uppercase tracking-widest">
-          Buenos Aires • Argentina
-        </p>
+
+	{/* CONTENEDOR FLEX EN COLUMNA PARA SEPARAR LAS LINEAS */}
+        <div className="mt-10 flex flex-col gap-2 font-mono text-[10px] uppercase tracking-[0.2em]">
+          <span className="text-cyan-400 font-black drop-shadow-[0_0_8px_rgba(34,211,238,0.4)]">
+            nibalink.com
+          </span>
+          <span className="text-slate-500">
+            Buenos Aires - Argentina
+          </span>
+        </div>
+
       </div>
     </section>
   );

@@ -1,12 +1,15 @@
 # nibalink_services_landing/docker-compose.yml
 
 services:
-  nibalink_landing:
+  nibalink_landing: # Este es el nombre del servicio
     build: 
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: nibalink_services_landing
-    ports:
-      - "8080:80"
+    container_name: nibalink_services_landing # Este es el nombre que busca Nginx
     restart: always
+    networks:
+      - nibalink_net
 
+networks:
+  nibalink_net:
+    external: true 

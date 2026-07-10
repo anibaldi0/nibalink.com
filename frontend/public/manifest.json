@@ -1,0 +1,24 @@
+{
+  "short_name": "Nibalink",
+  "name": "Nibalink Smart Factory",
+  "icons": [
+    {
+      "src": "pwa-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "scope": "/",
+  "orientation": "portrait"
+}
