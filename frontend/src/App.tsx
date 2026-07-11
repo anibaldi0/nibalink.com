@@ -8,7 +8,8 @@ import ServicesPage from './pages/Services_page';
 import HomePage from './pages/Home_page';
 import MetricsPage from './pages/Metrics_page';
 import LoginPage from './pages/Login_page';
-import DashboardPage from './pages/Dashboard_page'; // NUEVO
+import DashboardPage from './pages/Dashboard_page';
+import CVPage from './pages/CV_page'; // NUEVO
 
 const App: React.FC = () => {
   return (
@@ -18,9 +19,10 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/bitacora" element={<BitacoraPage />} />
           <Route path="/servicios" element={<ServicesPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} /> {/* NUEVO */}
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/metrics" element={<MetricsPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/cv" element={<CVPage />} /> {/* NUEVO */}
         </Routes>
       </Layout>
     </Router>

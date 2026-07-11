@@ -1,7 +1,7 @@
-// frontend/src/components/layout/header_component.tsx
+// frontend/src/components/layout/Header_component.tsx
 
 import React, { useState } from 'react';
-import { Menu, X, Sun, Moon, LogIn, LogOut, User, LayoutDashboard, ExternalLink } from 'lucide-react'; 
+import { Menu, X, Sun, Moon, LogIn, LogOut, User, LayoutDashboard, ExternalLink, FileText } from 'lucide-react'; 
 import { useDarkMode } from '../../hooks/useDarkMode_hook';
 import { Link, useNavigate } from 'react-router-dom';
 // @ts-ignore
@@ -57,6 +57,7 @@ const Header: React.FC<HeaderProps> = ({ loading }) => {
 
             <Link to="/bitacora" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Bitacora</Link>
             <Link to="/metrics" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Metricas</Link>
+            <Link to="/cv" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-bold text-blue-600 dark:text-blue-400">CV</Link> {/* NUEVO */}
             {isAdmin && (
               <Link to="/dashboard" className="text-blue-600 dark:text-blue-400 font-bold hover:underline">Dashboard</Link>
             )}
@@ -86,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ loading }) => {
           </div>
         </div>
 
-        {/* Mobile Controls - RESTAURADO */}
+        {/* Mobile Controls */}
         <div className="flex md:hidden items-center gap-2">
           <button onClick={() => setIsDark(!isDark)} className="p-2 text-slate-600 dark:text-yellow-400">
             {isDark ? <Sun size={20} /> : <Moon size={20} />}
@@ -113,6 +114,14 @@ const Header: React.FC<HeaderProps> = ({ loading }) => {
 
             <Link to="/bitacora" onClick={() => setIsMenuOpen(false)} className="p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">Bitácora</Link>
             <Link to="/metrics" onClick={() => setIsMenuOpen(false)} className="p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">Métricas</Link>
+            
+            <Link 
+              to="/cv" 
+              onClick={() => setIsMenuOpen(false)} 
+              className="p-3 text-blue-600 dark:text-blue-400 font-bold hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg flex items-center gap-2"
+            >
+              <FileText size={18} /> CV Profesional
+            </Link>
             
             {isAdmin && (
               <Link 
