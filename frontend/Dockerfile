@@ -23,6 +23,16 @@ FROM nginx:alpine
 # Copiamos los archivos estaticos generados en la etapa anterior
 COPY --from=build /app/dist /usr/share/nginx/html
 
+# ===== NUEVO: Copiar archivos estaticos de public/ directamente =====
+# Esto asegura que PDF, sitemap, robots, etc. estén disponibles
+COPY public/*.pdf /usr/share/nginx/html/
+COPY public/*.svg /usr/share/nginx/html/
+COPY public/*.xml /usr/share/nginx/html/
+COPY public/*.txt /usr/share/nginx/html/
+COPY public/manifest.json /usr/share/nginx/html/
+COPY public/pwa-*.png /usr/share/nginx/html/
+# ===== FIN NUEVO =====
+
 # Configuracion de Nginx para manejar rutas de React (SPA) sin dar 404
 RUN echo 'server { \
     listen 80; \
