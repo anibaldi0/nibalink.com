@@ -21,8 +21,8 @@ const CVPage: React.FC = () => {
   };
 
   const profile = {
-    name: "Aníbal Caeiro",
-    title: "Backend & Infrastructure Engineer | AI-Assisted Workflows Specialist",
+    name: "Anibal Caeiro",
+    title: "Backend & Infrastructure Engineer | AI-Assisted Workflows Dev",
     location: "Avellaneda, Buenos Aires, Argentina",
     email: "inbox.nibal.ink@gmail.com",
     web: "nibalink.com",
@@ -60,10 +60,20 @@ const CVPage: React.FC = () => {
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-200/80 dark:bg-white/10 text-slate-700 dark:text-white transition-colors duration-300">
                 <MapPin size={14} className="text-blue-600 dark:text-blue-400" /> {profile.location}
               </span>
-              <a href={`mailto:${profile.email}`} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-200/80 dark:bg-white/10 text-slate-700 dark:text-white hover:bg-slate-300/80 dark:hover:bg-white/20 transition-all duration-300">
+              <a 
+                href={`mailto:${profile.email}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-200/80 dark:bg-white/10 text-slate-700 dark:text-white hover:bg-slate-300/80 dark:hover:bg-white/20 transition-all duration-300"
+              >
                 <Mail size={14} className="text-blue-600 dark:text-blue-400" /> {profile.email}
               </a>
-              <a href={`https://${profile.web}`} target="_blank" rel="noopener" className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-200/80 dark:bg-white/10 text-slate-700 dark:text-white hover:bg-slate-300/80 dark:hover:bg-white/20 transition-all duration-300">
+              <a 
+                href={`https://${profile.web}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-200/80 dark:bg-white/10 text-slate-700 dark:text-white hover:bg-slate-300/80 dark:hover:bg-white/20 transition-all duration-300"
+              >
                 <Globe size={14} className="text-blue-600 dark:text-blue-400" /> {profile.web}
               </a>
             </div>
@@ -87,10 +97,20 @@ const CVPage: React.FC = () => {
 
         {/* Redes sociales */}
         <div className="flex flex-wrap gap-4 mt-4 pt-4 border-t border-slate-300/50 dark:border-white/10 transition-colors duration-300">
-          <a href={`https://${profile.linkedin}`} target="_blank" rel="noopener" className="flex items-center gap-2 text-xs text-slate-600 dark:text-white/70 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300">
+          <a 
+            href={`https://${profile.linkedin}`} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-xs text-slate-600 dark:text-white/70 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 cursor-pointer pointer-events-auto z-10 relative"
+          >
             <Linkedin size={16} /> LinkedIn
           </a>
-          <a href={`https://${profile.github}`} target="_blank" rel="noopener" className="flex items-center gap-2 text-xs text-slate-600 dark:text-white/70 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300">
+          <a 
+            href={`https://${profile.github}`} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-xs text-slate-600 dark:text-white/70 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300"
+          >
             <Github size={16} /> GitHub
           </a>
         </div>
@@ -105,7 +125,7 @@ const CVPage: React.FC = () => {
           <Briefcase size={14} /> 3+ años de formación
         </span>
         <span className="flex items-center gap-2 px-4 py-2 border rounded-full text-xs font-bold bg-purple-100 dark:bg-purple-500/10 border-purple-200 dark:border-purple-500/20 text-purple-700 dark:text-purple-400 transition-colors duration-300">
-          <GraduationCap size={14} /> Especialista en Infraestructura
+          <GraduationCap size={14} /> Dev en Infraestructura
         </span>
       </div>
 
@@ -137,11 +157,21 @@ const CVPage: React.FC = () => {
       <div className="mt-8 text-center p-4 md:p-6 rounded-[2.5rem] border transition-colors duration-300 bg-blue-50 dark:bg-blue-500/5 border-blue-200 dark:border-blue-500/20">
         <p className="text-sm md:text-base font-medium text-slate-600 dark:text-slate-400 transition-colors duration-300">
           ¿Interesado en mi perfil?{' '}
-          <a href="https://wa.me/5491127900298" className="text-green-600 dark:text-green-400 font-bold hover:underline">
+          <a 
+            href="https://wa.me/5491127900298" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-green-600 dark:text-green-400 font-bold hover:underline"
+          >
             Hablemos
           </a>
           {' '}o conéctate en{' '}
-          <a href={`https://${profile.linkedin}`} className="text-blue-600 dark:text-blue-400 font-bold hover:underline">
+          <a 
+            href={`https://${profile.linkedin}`} 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 dark:text-blue-400 font-bold hover:underline"
+          >
             LinkedIn
           </a>
         </p>
