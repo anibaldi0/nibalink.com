@@ -10,7 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectRegister: 'auto', // Forzamos la inyección
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'] // Cache de assets
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'], // Cache de assets
+        navigateFallbackDenylist: [/\.pdf$/, /^\/api\//],
       },
       manifest: {
         name: 'Nibalink Dashboard',

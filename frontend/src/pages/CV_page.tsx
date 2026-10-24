@@ -14,6 +14,9 @@ const CVPage: React.FC = () => {
     if (stored) setDownloadCount(parseInt(stored));
   }, []);
 
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+
   const handleDownload = () => {
     const newCount = downloadCount + 1;
     setDownloadCount(newCount);
@@ -145,11 +148,20 @@ const CVPage: React.FC = () => {
           </a>
         </div>
         <div className="w-full max-w-4xl mx-auto rounded-2xl overflow-hidden border transition-colors duration-300 bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800" style={{ minHeight: '70vh', aspectRatio: '1/1.4' }}>
-          <iframe 
+          {isMobile ? (
+            <div className="flex flex-col items-center justify-center h-full p-8 text-center">
+              <FileText size={48} className="text-blue-500 mb-4" />
+              <p className="text-sm text-slate-600 dark:text-slate-400 max-w-xs">
+                En mobile, usa el boton Descargar PDF para ver el CV completo.
+              </p>
+            </div>
+          ) : (
+            <iframe 
             src="/CV_Anibal_Caeiro_English.pdf#toolbar=0" 
             className="w-full h-full"
             title="CV Aníbal Caeiro - Nibalink"
           />
+          )}
         </div>
       </div>
 
