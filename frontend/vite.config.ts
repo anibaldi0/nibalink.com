@@ -24,7 +24,7 @@ export default defineConfig({
             src: 'pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png',
-            porpose: 'any' // el icono tal cual
+            purpose: 'any' // el icono tal cual
           },
           {
             src: 'pwa-512x512.png',
