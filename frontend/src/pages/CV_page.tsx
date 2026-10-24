@@ -83,9 +83,8 @@ const CVPage: React.FC = () => {
           </div>
           
           <div className="flex flex-col items-end gap-2 w-full md:w-auto">
-            <a 
-              href="/CV_Anibal_Caeiro_English.pdf" 
-              download="Anibal_Caeiro_CV_2026.pdf"
+            <a
+              href="/descargar-cv.pdf"
               onClick={handleDownload}
               className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-black rounded-2xl hover:scale-105 transition-all shadow-xl shadow-blue-500/30 active:scale-95 w-full md:w-auto justify-center text-sm"
             >
